@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rock Paper Scissors</title>
+    <style>
+        .game-container {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>Rock, Paper, Scissors</h1>
+        <button id="rock">Rock</button>
+        <button id="paper">Paper</button>
+        <button id="scissors">Scissors</button>
+        <div id="result"></div>
+        <div id="score">
+            <p>You: <span id="playerScore">0</span></p>
+            <p>Computer: <span id="computerScore">0</span></p>
+        </div>
+    </div>
+    <script>
+        const buttons = document.querySelectorAll('button');
+        const resultDiv = document.getElementById('result');
+        const playerScoreSpan = document.getElementById('playerScore');
+        const computerScoreSpan = document.getElementById('computerScore');
+
+        let playerScore = 0;
+        let computerScore = 0;
+
+        function getComputerChoice() {
+          const choices = ['rock', 'paper', 'scissors'];
+          const randomIndex = Math.floor(Math.random() * choices.length);
+          return choices[randomIndex];
+        }
+
+        function playRound(playerSelection, computerSelection) {
+          if (playerSelection === computerSelection) {
+            return "It's a tie!";
+          } else if (
+            (playerSelection === 'rock' && computerSelection === 'scissors') ||
+            (playerSelection === 'paper' && computerSelection === 'rock') ||
+            (playerSelection === 'scissors' && computerSelection === 'paper')
+          ) {
+            playerScore++;
+            playerScoreSpan.textContent = playerScore;
+            return "You win!";
+          } else {
+            computerScore++;
+            computerScoreSpan.textContent = computerScore;
+            return "You lose!";
+          }
+        }
+
+        buttons.forEach(button => {
+          button.addEventListener('click', () => {
+            const playerSelection = button.id;
+            const computerSelection = getComputerChoice();
+            const result = playRound(playerSelection, computerSelection);
+            resultDiv.textContent = `You picked ${playerSelection}. Computer picked ${computerSelection}. ${result}`;
+          });
+        });
+    </script>
+</body>
+</html>
